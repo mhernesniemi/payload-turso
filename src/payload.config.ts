@@ -1,4 +1,4 @@
-import { vercelPostgresAdapter } from "@payloadcms/db-vercel-postgres";
+import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
@@ -45,9 +45,10 @@ export default buildConfig({
     locales: ["fi", "en"],
     defaultLocale: "fi",
   },
-  db: vercelPostgresAdapter({
-    pool: {
-      connectionString: process.env.POSTGRES_URL || process.env.DATABASE_URI,
+  db: sqliteAdapter({
+    client: {
+      url: process.env.DATABASE_URI || "",
+      authToken: process.env.DATABASE_AUTH_TOKEN || "",
     },
   }),
   graphQL: {
